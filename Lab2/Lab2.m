@@ -6,17 +6,14 @@
 
 %% Question 2 - Model Estimation 1-D Case
 %% a)ML Parametric Estimation - Gaussian
-% Assuming the samples are independent and guassian, the sample mean is the
-% true mean
-muA_gaus = mean(al, 1);
-muA_gaus = mean(muA_gaus, 2);
-nA = length(al);
+function [mu, sigma] = gaussianEstimation1D(data)
+    %Assuming the samples are gaussian and independent the true mean is just
+    %the sample mean and the true covariance is the sample covariance
+    N = length(data);
+    mu = sum(data)/N;
+    var = sum((data - mu).^2) / N;
+    sigma = sqrt(var);
+end
 
-syms mu sigma x
-gaussian = @(mu, sigma, x) (exp(-1/2*((x-mu)/sigma)^2)/(sqrt(2*pi)*sigma));
-log_gauss = @(mu, sigma, x) ln(gaussian(mu, sigma, x));
-diff_log_gauss = [diff(gaussian, mu) diff(gaussian, sigma)];
-
-%unsure how to differentiate a function with a sum in it.
 
 
