@@ -16,20 +16,36 @@ x = 0:0.01:maxVal;
 y = zeros(size(a));
 [muEst, sigmaEst] = gaussianEstimation1D(a);
 
-pdf = normpdf(x, muA, sdA);
-pdfEst = normpdf(x, muEst, sigmaEst);
+pdf_gauss = normpdf(x, muA, sdA);
+pdf_est_gauss = normpdf(x, muEst, sigmaEst);
 
 figure(1);
 hold on;
 scatter(a, y);
-plot(x, pdf);
-plot(x, pdfEst);
-title('ML Estimation of Gaussian Distribution');
+plot(x, pdf_gauss);
+plot(x, pdf_est_gauss);
+title('ML Estimation of Assumed Gaussian Distribution');
 legend('Samples', 'True Gaussian PDF ', 'Estimated Gaussian PDF');
 xlabel('x');
 ylabel('p(x)');
 grid on;
 hold off;
 
+lam = exponentialEstimation1D(b);
+
+pdf_exp = exp(-x);
+pdf_est_exp = lam*exp(-lam*x);
+
+figure(2);
+hold on;
+scatter(b, y);
+plot(x, pdf_exp);
+plot(x, pdf_est_exp);
+title('ML Estimation Assuming Gaussian Distribution');
+legend('Samples', 'True Exponential PDF ', 'Estimated Exponential PDF');
+xlabel('x');
+ylabel('p(x)');
+grid on;
+hold off;
 
 
