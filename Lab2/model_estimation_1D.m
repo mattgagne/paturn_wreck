@@ -6,6 +6,8 @@
 
 %% Question 2 - Model Estimation 1-D Case
 %% a)ML Parametric Estimation - Gaussian
+close all; clear all; clc;
+load('lab2_1.mat');
 mu_A = 5;
 sd_A = 1;
 
