@@ -6,14 +6,30 @@
 
 %% Question 2 - Model Estimation 1-D Case
 %% a)ML Parametric Estimation - Gaussian
-function [mu, sigma] = gaussianEstimation1D(data)
-    %Assuming the samples are gaussian and independent the true mean is just
-    %the sample mean and the true covariance is the sample covariance
-    N = length(data);
-    mu = sum(data)/N;
-    var = sum((data - mu).^2) / N;
-    sigma = sqrt(var);
-end
+%% Gaussian
+% Set A
+muA = 5;
+sdA = 1;
+
+maxVal = max(a(1,:))+1;
+x = 0:0.01:maxVal;
+y = zeros(size(a));
+[muEst, sigmaEst] = gaussianEstimation1D(a);
+
+pdf = normpdf(x, muA, sdA);
+pdfEst = normpdf(x, muEst, sigmaEst);
+
+figure(1);
+hold on;
+scatter(a, y);
+plot(x, pdf);
+plot(x, pdfEst);
+title('ML Estimation of Gaussian Distribution');
+legend('Samples', 'True Gaussian PDF ', 'Estimated Gaussian PDF');
+xlabel('x');
+ylabel('p(x)');
+grid on;
+hold off;
 
 
 
