@@ -9,11 +9,9 @@
 mu_A = 5;
 sd_A = 1;
 
-max_val_b = max(b(1,:))+1;
-max_val_a = max(a(1,:))+1;
-
 % Gaussian Estimation - Data Set A
-x = 0:0.01:max_val_a;
+maxVal = max(a(1,:))+1;
+x = 0:0.01:maxVal;
 y = zeros(size(a));
 [muEst, sigmaEst] = gaussianEstimation1D(a);
 
@@ -29,7 +27,8 @@ legend('Samples', 'True Gaussian PDF ', 'Estimated Gaussian PDF');
 xlabel('x'); ylabel('p(x)');
 
 % Gaussian Estimation - Data Set B
-x = 0:0.01:max_val_b;
+maxVal = max(b(1,:))+1;
+x = 0:0.01:maxVal;
 y = zeros(size(b));
 [muEst, sigmaEst] = gaussianEstimation1D(b);
 
@@ -48,7 +47,7 @@ ylabel('p(x)');
 grid on;
 
 % Exponential Estimation - Data Set A
-x = 0:0.01:max_val_a;
+x = 0:0.01:maxVal;
 y = zeros(size(a));
 lam = exponentialEstimation1D(a);
 
