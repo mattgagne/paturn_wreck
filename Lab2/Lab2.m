@@ -6,11 +6,13 @@
 
 %% Question 2 - Model Estimation 1-D Case
 %% a)ML Parametric Estimation - Gaussian
-%% Gaussian
-% Set A
+%% Gaussian Estimation
 muA = 5;
 sdA = 1;
 
+lam = exponentialEstimation1D(b);
+
+% Data Set A
 maxVal = max(a(1,:))+1;
 x = 0:0.01:maxVal;
 y = zeros(size(a));
@@ -27,7 +29,28 @@ title('ML Estimation of Assumed Gaussian Distribution');
 legend('Samples', 'True Gaussian PDF ', 'Estimated Gaussian PDF');
 xlabel('x'); ylabel('p(x)');
 
+% Data Set B
 lam = exponentialEstimation1D(b);
+
+maxVal = max(b(1,:))+1;
+x = 0:0.01:maxVal;
+y = zeros(size(b));
+[muEst, sigmaEst] = gaussianEstimation1D(b);
+
+pdf_gauss = normpdf(x, muA, sdA);
+pdf_est_gauss = normpdf(x, muEst, sigmaEst);
+
+figure(1);
+hold on;
+scatter(a, y);
+plot(x, pdf_gauss);
+plot(x, pdf_est_gauss);
+title('ML Estimation of Assumed Gaussian Distribution');
+legend('Samples', 'True Gaussian PDF ', 'Estimated Gaussian PDF');
+xlabel('x');
+ylabel('p(x)');
+grid on;
+hold off;
 
 pdf_exp = exp(-x);
 pdf_est_exp = lam*exp(-lam*x);
