@@ -13,6 +13,10 @@ syms x1 x2 discriminants_list
 %% Question 4 - Model Estimation 2-D Case
 load('lab2_3.mat')
 
+% Create copies of the points
+a_copy = a;
+b_copy = b;
+
 % Initialize as 1 so loop begins
 num_ab = 1;
 num_ba = 1;
@@ -28,7 +32,7 @@ discriminants_list = sym('a', [limit_tries, 1]);
 
 j = 1;
 
-while (length(a) > 0) && (length(b) > 0)
+while (~isempty(a)) && (~isempty(b))
     num_tries = 1;
     num_ab = 1;
     num_ba = 1;
@@ -43,9 +47,9 @@ while (length(a) > 0) && (length(b) > 0)
         num_ba = 0;
 
         % plot so i can figure out what's happening
-    %     scatter(a(:,1), a(:,2))
+    %     scatter(a_copy(:,1), a_copy(:,2))
     %     hold on
-    %     scatter(b(:,1), b(:,2))
+    %     scatter(b_copy(:,1), b_copy(:,2))
     %     hold on
     %     
     %     y = solve(discriminant == 0,x2);
@@ -72,7 +76,6 @@ while (length(a) > 0) && (length(b) > 0)
 
         % Store the values
         misclassified_list(j, :) = [num_ab num_ba];
-        misclassified_list(j, :)
         
         points_list(j, :) = [random_a_point random_b_point];
         discriminants_list(j) = discriminant;
@@ -103,5 +106,45 @@ while (length(a) > 0) && (length(b) > 0)
         end
     end
 end
+
+a_new = [];
+b_new = [];
+boundary_points = [];
+
+% for i = 1:j-1
+%     discriminant = discriminants_list(i);
+%    
+%     for x_point = min(b_copy(:,1)):1:max(b_copy(:,1))
+%         for y_point = min(b_copy(:,2)):1:max(b_copy(:,2))
+%             value = double(subs(discriminant, [x1 x2], [x_point y_point]));
+%             
+%             if (misclassified_list(j,1) == 0)
+%                 b_new = [b_new; x_point y_point];
+%             end
+%             
+%             if (misclassified_list(j,2) == 0)
+%                 a_new = [a_new; x_point y_point];
+%             end
+%             
+%             if value < 10
+%                boundary_points = [boundary_points; x_point y_point]; 
+%             end
+%         end
+%     end
+% end
+
+for i = 1:j-1
+    discriminant = discriminants_list(i);
+    
+    y = solve(discriminant == 0,x2);
+    x1_range = min(b_copy(:,1)):1:max(b_copy(:,1));
+    plot(x1_range, subs(y,x1,x1_range));
+    hold on;
+end
+
+scatter(a_copy(:,1), a_copy(:,2))
+hold on
+scatter(b_copy(:,1), b_copy(:,2))
+hold on
 
 disp('Finished')
