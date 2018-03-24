@@ -1,21 +1,18 @@
 function parzen_plotML(al, bl, cl)
-   % Making a Gaussian window with variance of 400
-    k = 400;
-    mu = [k/2 k/2];
+   % Gaussian window
+    w_sz = 400;
+    mu = [w_sz/2 w_sz/2];
     cov = [400 0; 0 400];
     step = 1;
-
-    % Defining the area of interest
     res = [step 0 0 450 450];
-
-    [X1,X2] = meshgrid(1:step:k);
-    win = mvnpdf([X1(:) X2(:)], mu, cov);
-    win = reshape(win,length(X2),length(X1));
-
-    [p_a, x_a, y_a] = parzen(al,res, win);
-    [p_b, x_b, y_b] = parzen(bl,res, win);
-    [p_c, x_c, y_c] = parzen(cl,res, win);
-
+    [x,y] = meshgrid(1:step:w_sz);
+    w = mvnpdf([x(:) y(:)], mu, cov);
+    w = reshape(w,length(y),length(x));
+    % Parzen function
+    [p_a, x_a, y_a] = parzen(al,res, w);
+    [p_b, x_b, y_b] = parzen(bl,res, w);
+    [p_c, x_c, y_c] = parzen(cl,res, w);
+    % Compare probabilities
     n1 = 0; n2 = 0; n3 = 0;
     for x = 1:step:452
         for y = 1:step:452 
@@ -33,6 +30,7 @@ function parzen_plotML(al, bl, cl)
             end
         end
     end
+    % Plot
     if exist('region1')
         RGB = [139 182 249]/256 ;
         scatter(region1(:,2), region1(:,1), [], RGB);
