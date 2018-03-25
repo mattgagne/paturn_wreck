@@ -46,16 +46,6 @@ while (~isempty(a)) && (~isempty(b))
         num_ab = 0;
         num_ba = 0;
 
-        % plot so i can figure out what's happening
-    %     scatter(a_copy(:,1), a_copy(:,2))
-    %     hold on
-    %     scatter(b_copy(:,1), b_copy(:,2))
-    %     hold on
-    %     
-    %     y = solve(discriminant == 0,x2);
-    %     x1_range = min(b(:,1)):1:max(b(:,1));
-    %     plot(x1_range, subs(y,x1,x1_range));
-
         for i = 1:size(a,1)
             % Check if the a point is classified as b 
             a_point = [a(i,1) a(i,2)];
@@ -107,44 +97,56 @@ while (~isempty(a)) && (~isempty(b))
     end
 end
 
-a_new = [];
-b_new = [];
-boundary_points = [];
-
-% for i = 1:j-1
-%     discriminant = discriminants_list(i);
-%    
-%     for x_point = min(b_copy(:,1)):1:max(b_copy(:,1))
-%         for y_point = min(b_copy(:,2)):1:max(b_copy(:,2))
-%             value = double(subs(discriminant, [x1 x2], [x_point y_point]));
-%             
-%             if (misclassified_list(j,1) == 0)
-%                 b_new = [b_new; x_point y_point];
-%             end
-%             
-%             if (misclassified_list(j,2) == 0)
-%                 a_new = [a_new; x_point y_point];
-%             end
-%             
-%             if value < 10
-%                boundary_points = [boundary_points; x_point y_point]; 
-%             end
-%         end
-%     end
-% end
-
-for i = 1:j-1
-    discriminant = discriminants_list(i);
-    
-    y = solve(discriminant == 0,x2);
-    x1_range = min(b_copy(:,1)):1:max(b_copy(:,1));
-    plot(x1_range, subs(y,x1,x1_range));
-    hold on;
-end
-
+%% PLOT THE POINTS
 scatter(a_copy(:,1), a_copy(:,2))
 hold on
 scatter(b_copy(:,1), b_copy(:,2))
 hold on
+
+
+%% CREATE BOUNDARY
+xmin = 200;
+xmax = 500;
+ymin = 0;
+ymax = 280;
+
+dx = 10;
+dy = 10;
+
+n1 = 0;
+n2 = 0;
+
+regionA = [];
+regionB = [];
+
+for x_iter_1 = xmin:dx:xmax
+    for x_iter_2 = ymin:dy:ymax
+        x = [x_iter_1 x_iter_2];
+        
+        for i = 1:j-1
+            discriminant = discriminants_list(i);
+
+            value = double(subs(discriminant, [x1 x2], [x_iter_1 x_iter_2]));
+            
+            % Point is classified as A and nBA = 0
+            if (value < 0) && (misclassified_list(i,2) == 0)
+                n1 = n1 + 1;
+                regionA(n1, :) = x;
+                
+            % Point is classified as B and nAB = 0
+            elseif (value > 0) && (misclassified_list(i,1) == 0)
+                n2 = n2 + 1;
+                regionB(n2, :) = x;
+            end
+        end
+    end
+end
+
+RGB = [0 1 0];
+scatter(regionA(:,1), regionA(:,2), [], RGB);
+hold on;
+
+RGB = [1 0 1];
+scatter(regionB(:,1), regionB(:,2), [], RGB);
 
 disp('Finished')
