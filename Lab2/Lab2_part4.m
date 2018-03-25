@@ -141,12 +141,19 @@ for x_iter_1 = xmin:dx:xmax
         end
     end
 end
-
-RGB = [0 1 0];
-scatter(regionA(:,1), regionA(:,2), [], RGB);
+%%
+RGB = [139 182 249]/256 ;
+scatter(regionA(:,1), regionA(:,2), [], RGB, 'filled');
 hold on;
 
-RGB = [1 0 1];
-scatter(regionB(:,1), regionB(:,2), [], RGB);
+
+RGB = [255 149 145]/256 ;
+scatter(regionB(:,1), regionB(:,2), [], RGB, 'filled');
+
+%% PLOT THE POINTS
+scatter(a_copy(:,1), a_copy(:,2), 'b', 'filled')
+hold on
+scatter(b_copy(:,1), b_copy(:,2), 'r', 'filled')
+hold on
 
 disp('Finished')
