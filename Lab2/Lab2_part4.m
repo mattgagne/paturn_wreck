@@ -97,21 +97,14 @@ while (~isempty(a)) && (~isempty(b))
     end
 end
 
-%% PLOT THE POINTS
-scatter(a_copy(:,1), a_copy(:,2))
-hold on
-scatter(b_copy(:,1), b_copy(:,2))
-hold on
-
-
 %% CREATE BOUNDARY
-xmin = 200;
+xmin = 220;
 xmax = 500;
 ymin = 0;
 ymax = 280;
 
-dx = 10;
-dy = 10;
+dx = 6;
+dy = 6;
 
 n1 = 0;
 n2 = 0;
@@ -142,18 +135,27 @@ for x_iter_1 = xmin:dx:xmax
     end
 end
 %%
+% Plot everything red (since everything else is class B)
+RGB = [255 149 145]/256 ;
+xgrid = meshgrid(0:6:550);
+ygrid = xgrid';
+scatter(xgrid(:),ygrid(:),[], RGB, 'filled'); hold on;
+% Plot class A
 RGB = [139 182 249]/256 ;
 scatter(regionA(:,1), regionA(:,2), [], RGB, 'filled');
 hold on;
-
-
+% Plot class B
 RGB = [255 149 145]/256 ;
 scatter(regionB(:,1), regionB(:,2), [], RGB, 'filled');
 
 %% PLOT THE POINTS
-scatter(a_copy(:,1), a_copy(:,2), 'b', 'filled')
+scat_a = scatter(a_copy(:,1), a_copy(:,2), 'b', 'filled')
 hold on
-scatter(b_copy(:,1), b_copy(:,2), 'r', 'filled')
+scat_b = scatter(b_copy(:,1), b_copy(:,2), 'r', 'filled')
 hold on
+
+xlabel('x1'); ylabel('x2');
+xlim([0 550]); ylim([0 450]);
+legend([scat_a, scat_b],'Data Set A', 'Data Set B');
 
 disp('Finished')
