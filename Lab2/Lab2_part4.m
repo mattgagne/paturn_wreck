@@ -116,6 +116,9 @@ for x_iter_1 = xmin:dx:xmax
     for x_iter_2 = ymin:dy:ymax
         x = [x_iter_1 x_iter_2];
         
+        class_chosen = 0;
+        lowest_misclassified = 0;
+        
         for i = 1:j-1
             discriminant = discriminants_list(i);
 
@@ -125,15 +128,41 @@ for x_iter_1 = xmin:dx:xmax
             if (value < 0) && (misclassified_list(i,2) == 0)
                 n1 = n1 + 1;
                 regionA(n1, :) = x;
+                class_chosen = 1;
+                break;
                 
             % Point is classified as B and nAB = 0
             elseif (value > 0) && (misclassified_list(i,1) == 0)
+                n2 = n2 + 1;
+                regionB(n2, :) = x;
+                class_chosen = 1;
+                break;
+            end
+            
+            % Most likely class A
+            if (value < 0) && (misclassified_list(i,2) < lowest_misclassified)
+                lowest_misclassified = misclassified_list(i,2);
+                probable_class = 1;
+                
+            % Most likely class B
+            elseif (value > 0) && (misclassified_list(i,1) < lowest_misclassified)
+                lowest_misclassified = misclassified_list(i,1);
+                probable_class = 2;
+            end
+        end
+        
+        if (class_chosen == 0)
+            if (probable_class == 1)
+                n1 = n1 + 1;
+                regionA(n1, :) = x;
+            elseif (probable_class == 2)
                 n2 = n2 + 1;
                 regionB(n2, :) = x;
             end
         end
     end
 end
+
 %%
 % Plot everything red (since everything else is class B)
 RGB = [255 149 145]/256 ;
