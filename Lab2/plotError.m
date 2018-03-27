@@ -151,7 +151,7 @@ misclassified_list11, misclassified_list12, misclassified_list13, misclassified_
 misclassified_list16, misclassified_list17, misclassified_list18, misclassified_list19, misclassified_list20];
 
 avg_error_rate = sum(total_misclassified, 2)/total/num_of_trials;
-std_error_rate = std(total_misclassified, 0, 2);
+std_error_rate = std(total_misclassified, 0, 2)/total/3;
 
 % remove zeros because total error is the sum of n_ab and n_ba
 total_misclassified(total_misclassified==0) = [];
