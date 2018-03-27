@@ -9,9 +9,8 @@ clc;
 %Nick Heersink - 20521906
 
 load('feat.mat')
-aplot(f32)
-hold on;
 
+% Replace all on f32, f32, or f32 to the desired data set
 data_length = size(f32);
 num_points = data_length(1,2); 
 
@@ -44,12 +43,13 @@ for i = 1:10
     [class_means(i,:), class_cov(i,:,:)] = gaussianEstimation2D(temp_data);
 end
 
-scatter(class_means(:,1), class_means(:,2))
+data_length = size(f32t);
+num_points = data_length(1,2); 
 
 for i = 1:num_points
-    x_point = f32(1,i);
-    y_point = f32(2,i);
-    actual_class = f32(3,i);
+    x_point = f32t(1,i);
+    y_point = f32t(2,i);
+    actual_class = f32t(3,i);
     
     % Find the distances for each class
     for j = 1:10
@@ -61,4 +61,5 @@ for i = 1:num_points
     confusion_matrix(actual_class, MICD_class) = confusion_matrix(actual_class, MICD_class) + 1;
 end
 
+percent_correct = trace(confusion_matrix)/160*100
         
