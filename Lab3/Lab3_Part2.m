@@ -73,5 +73,35 @@ imagesc(image12);
 colormap(gray);
 title('Wool');
 
+% poor classification when block size is 2x2
 figure(2);
 aplot(f2);
+
+% when block size is 8x8 (better but still not good)
+figure(3);
+aplot(f8);
+
+% when block size is 32x32 (best out of three)
+figure(4);
+aplot(f32);
+
+%legend
+% A = cloth
+% B = cotton
+% C = grass 
+% D = pigskin
+% E = wood
+% F = cork
+% G = paper
+% H = stone
+% I = raiffa
+% J = face
+
+% paper and cork are pretty similar as seen in the feature space
+% grass is also pretty similar to cork also seen in feature space 32x32
+% cloth and stone are similar
+% raiffa and wood are similar texture due to the streaks
+% cotton is most similar to grass but still can visually tell it is a
+% separate cluster (more dissimilar than the rest of the images except
+% face)
+% face is pretty different
