@@ -1,6 +1,6 @@
-function [class_means, class_cov] = get_means_and_variances(fn, num_points)
+function [class_means, class_cov] = get_means_and_variances(fn)
     temp_data = [];
-
+    num_points = size(fn, 2);
     % Find the mean/covariance for each class
     for i = 1:10
         temp_data = [];

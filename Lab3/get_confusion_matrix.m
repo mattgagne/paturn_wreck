@@ -6,7 +6,7 @@ function [confusion_matrix, percent_correct] = get_confusion_matrix(fn, fnt)
     class_means = zeros(10,2); % stores the means
     class_cov = zeros(10, 2, 2); % 10 2x2 matrices storing the covariances
 
-    [class_means, class_cov] = get_means_and_variances(fn, num_points);
+    [class_means, class_cov] = get_means_and_variances(fn);
 
     for i = 1:num_points
         x_point = fnt(1,i);
