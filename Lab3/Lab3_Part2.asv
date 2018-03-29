@@ -1,0 +1,12 @@
+load feat.mat
+hold on;
+image1 = readim('cloth.im');
+subplot(3, 4, 1);
+imagesc(image1);
+colormap(gray);
+%aplot(f2);
+
+image2 = readim('cork.im');
+subplot(3, 4, 2);
+imagesc(image);
+colormap(gray);
