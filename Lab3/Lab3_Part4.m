@@ -1,9 +1,6 @@
-%close all; clear all; clc;
+close all; clear all; clc;
+load feat.mat
 [class_means class_cov] = get_means_and_variances(f8);
-
-confusion_matrix = zeros(10,10);
-data_length = size(multf8);
-num_points = data_length(1,2); 
 
 for i = 1:size(multf8,1)
     for j = 1:size(multf8,2)
