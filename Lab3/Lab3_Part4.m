@@ -17,10 +17,24 @@ for i = 1:size(multf8,1)
     end
 end
 %% Plot
-figure();
+figure(1);
 imagesc(multim);
 colormap(gray);
-title('multim');
-figure();
+title('Multim');
+xlabel('X Pixels');
+ylabel('Y Pixels');
+
+figure(2);
 imagesc(cimage);
-colorbar
+colorbar('westoutside');
+title('Classified Multim');
+xlabel('X Pixels');
+ylabel('Y Pixels');
+descr = {'Legend'; '1 = Cloth'; '2 = Cotton'; '3 = Grass'; '4 = Pigskin'; '5 = Wood';
+    '6 = Cork'; '7 = Paper'; '8 = Stone'; '9 = Raiffa'; '10 = Face'};
+ax1 = axes('Position',[0 0 1 1],'Visible','off');
+axes(ax1); % sets ax1 to current axes
+txt = text(.068,0.6,descr);
+txt.FontWeight = 'bold';
+txt.HorizontalAlignment = 'center';
+
