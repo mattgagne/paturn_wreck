@@ -81,9 +81,19 @@ aplot(f2);
 figure(3);
 aplot(f8);
 
-% when block size is 32x32 (best out of three)
+%% when block size is 32x32 (best out of three)
 figure(4);
 aplot(f32);
+title('32x32-Block Feature Space');
+xlabel('x1');
+ylabel('x2');
+descr = {'Legend'; 'A = Cloth'; 'B = Cotton'; 'C = Grass'; 'D = Pigskin'; 'E = Wood';
+    'F = Cork'; 'G = Paper'; 'H = Stone'; 'I = Raiffa'; 'J = Face'};
+ax1 = axes('Position',[0 0 1 1],'Visible','off');
+axes(ax1); % sets ax1 to current axes
+txt = text(.038,0.6,descr);
+txt.FontWeight = 'bold';
+txt.HorizontalAlignment = 'center';
 
 %legend
 % A = cloth
